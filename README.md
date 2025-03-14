@@ -15,4 +15,4 @@
 A meme that captures how I currently feel about my university studies is ![](https://media1.tenor.com/m/77-zKEtw2zUAAAAC/casper-ruud-clicking-heels.gif)
 
 
-If you are interested in learning more about me make sure to connect with me on [LinkedIn](https://www.linkedin.com/in/sofia-roberts-b96022353/)
+If you are interested in learning more about me, make sure to connect with me on [LinkedIn](https://www.linkedin.com/in/sofia-roberts-b96022353/)
