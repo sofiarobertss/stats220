@@ -95,6 +95,7 @@ ggplot(num_ads_long, aes(x = num_ads, fill = platform)) +
   scale_fill_manual(values = c("insta_num_ads" = "#CBC3E3", "tiktok_num_ads" = "#1E90FF")) 
 
 ```
+
 Based on this bar graph, it is obvious that there are far more advertisements on Instagram then there are on TikTok. However, it is important to note that the number of Instagram advertisements is variable depending on what you are doing on Instagram. For example, there are advertisements between every second story and every second story but there are less advertisements on Instagram reels. Therefore, the total number of Instagram advertisements varied quite significantly depending on how much time I spent on each section of Instagram.
 
 **Primary Advertisement Category Comparison**
@@ -113,6 +114,7 @@ ggplot(category_long, aes(x = primary_category, fill = platform)) +
   coord_flip()
 
 ```
+
 To clarify; the "no clear primary category' section means that when tallying up the categories of the ads, there was equal amounts of advertisements from multiple different categories. These statistics  paint a more detailed picture of how relevant these advertisements are to me. For example, I would prefer to see advertisements about Fashion and Food, in comparison to general company advertisements. The primary categories also lend some insight into the nature of the advertisements on the different platforms. For example, 'Food' and 'Activites and Events' tend to be advertisements specific to events or restaurants in Auckland, while 'Fashion' and 'Company Advertisements' are more general to New Zealand on a whole. This shows that while there may be no difference between the direct correlation of these ads to my specific interests, Instagrams advertisements are more specific to me living in Auckland. 
 
 
