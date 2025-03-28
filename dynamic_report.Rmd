@@ -1,0 +1,118 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+library(tidyverse)
+library(ggplot2)
+
+```
+
+```{css}
+h2{
+  font-weight: bold; 
+  text-align: center;
+}
+
+```
+
+## Are We Really Being Watched?
+
+**Introduction** 
+
+In this digital day and age we have been told many times that "our phone is listening to us" and that our activities are being tracked. I am sure that at least once someone has told us a story about an advertisement appearing on their phones regarding something that they were just talking about, or this phenomenon has occurred directly to us. 
+
+While my data does not directly bust or confirm this myth, it does provide a better idea surrounding whether advertisements on social medias are in fact catered towards our interests and whether there are similarities between the advertisements on different apps. 
+
+**Data Collection Information**
+
+The data that is used for this report was collected through a Google Form that I made. I kept track of the amount and type of ad that I encountered over a 10 minute period on both TikTok and Instagram. Using the prompts on the Google Form, after each 10 minute period I entered the amount of ads, the primary category of these ads and how relevant these ads were to my interests. 
+
+**Mean Relevancy Statistics**
+
+```{r}
+#Setting up and reading the csv file
+
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRtbkHtlR0gWNGgLxyeoeLzqcw-VU1wce4GZHh8saXmCRSLA6qP2IJds8YELMgD-LZTZ7OaHmIXgm61/pub?output=csv")
+
+#Renaming the variables
+labelled_logged_data <- logged_data %>%
+  rename(timestamp = 1, 
+         insta_num_ads = 2,
+         insta_primary_category = 3,
+         insta_general_scale = 4, 
+         tiktok_num_ads = 5, 
+         tiktok_primary_category = 6, 
+         tiktok_general_scale = 7)
+
+#Actual Summary Value 1 - Mean Impression Rating of Instagram
+mean_insta_relevancy <- labelled_logged_data %>%
+  pull(insta_general_scale) %>%
+  mean() %>%
+  round(1) 
+
+
+#Actual Summary Value 2 - Mean Impression Rating of TikTok
+mean_tiktok_relevancy <- labelled_logged_data %>%
+  pull(tiktok_general_scale) %>%
+  mean() %>%
+  round(1)
+
+```
+The mean relevancy of the Instagram advertisements (on a scale of 1-5) is `r mean_insta_relevancy`. In comparison, the mean relevancy of the TikTok advertisements (on a scale of 1-5) is `r mean_tiktok_relevancy`. As we can see, the mean relevancy rating of both the Instagram and TikTok advertisements is quite low. This creates the impression that while some advertisements are certainly based on your activity, such as what you look up on the internet, most advertisements are simply generalised. They both have fairly similar relevancy ratings, showing that not one company is more 'in tune' with our data and interests compared to the other. 
+
+**Number of Advertisements Statistics**
+
+```{r}
+#Actual Summary value 3 - Max Number of Advertisements in Instagram
+max_insta_ad_length <- labelled_logged_data %>%
+  pull(insta_num_ads) %>%
+  max()
+
+
+#Actual Summary Value 4 - Max Number of Advertisements in TikTok
+max_tiktok_ad_length <- labelled_logged_data %>%
+  pull(tiktok_num_ads) %>%
+  max() 
+
+```
+The maximum number of Instagram advertisements in a 10 minute period is `r max_insta_ad_length`. In comparison, the maximum number of TikTok advertisements in a 10 minute period is `r max_tiktok_ad_length`. These statistics create the impression that Instagram has far more advertisements compared to TikTok. 
+
+Evidence for this comparison is found in the following bar graph:
+
+```{r}
+#Actual Bar Graph 1
+num_ads_long <- labelled_logged_data %>%
+  gather(key = "platform", value = "num_ads", insta_num_ads, tiktok_num_ads)
+
+ggplot(num_ads_long, aes(x = num_ads, fill = platform)) + 
+  geom_bar(position = "stack") +  
+  labs(title = "Comparison of Number of Ads (Instagram vs TikTok)",
+       x = "Number of Ads", y = "Frequency") +
+  scale_fill_manual(values = c("insta_num_ads" = "#CBC3E3", "tiktok_num_ads" = "#1E90FF")) 
+
+```
+Based on this bar graph, it is obvious that there are far more advertisements on Instagram then there are on TikTok. However, it is important to note that the number of Instagram advertisements is variable depending on what you are doing on Instagram. For example, there are advertisements between every second story and every second story but there are less advertisements on Instagram reels. Therefore, the total number of Instagram advertisements varied quite significantly depending on how much time I spent on each section of Instagram.
+
+**Primary Advertisement Category Comparison**
+
+While the number and relevancy of advertisements is important, it is also important to note the primary category of these advertisements. 
+```{r}
+#Actual Bar Graph 2
+category_long <- labelled_logged_data %>%
+  gather(key = "platform", value = "primary_category", insta_primary_category, tiktok_primary_category)
+
+ggplot(category_long, aes(x = primary_category, fill = platform)) + 
+  geom_bar(position = "dodge") + 
+  labs(title = "Comparison of the Primary Category (Instagram vs TikTok)", 
+       x = "Primary Category of the Advertisements", y = "Frequency") + 
+  scale_fill_manual(values = c("insta_primary_category" = "#FFB6C1", "tiktok_primary_category" = "#00008B")) + 
+  coord_flip()
+
+```
+To clarify; the "no clear primary category' section means that when tallying up the categories of the ads, there was equal amounts of advertisements from multiple different categories. These statistics  paint a more detailed picture of how relevant these advertisements are to me. For example, I would prefer to see advertisements about Fashion and Food, in comparison to general company advertisements. The primary categories also lend some insight into the nature of the advertisements on the different platforms. For example, 'Food' and 'Activites and Events' tend to be advertisements specific to events or restaurants in Auckland, while 'Fashion' and 'Company Advertisements' are more general to New Zealand on a whole. This shows that while there may be no difference between the direct correlation of these ads to my specific interests, Instagrams advertisements are more specific to me living in Auckland. 
+
+
